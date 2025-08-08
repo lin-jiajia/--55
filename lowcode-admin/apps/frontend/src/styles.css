@@ -1,0 +1,2 @@
+:root { --app-primaryColor: #409EFF; }
+[data-theme="dark"] { background: #111; color: #eee; }

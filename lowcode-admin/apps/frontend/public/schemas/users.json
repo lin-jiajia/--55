@@ -1,0 +1,42 @@
+{
+  "title": "用户管理",
+  "route": "/lowcode/users",
+  "api": {
+    "list": "/api/users/list",
+    "create": "/api/users",
+    "update": "/api/users/:id",
+    "delete": "/api/users/:id",
+    "import": "/api/users/import",
+    "export": "/api/users/export",
+    "template": "/api/users/template"
+  },
+  "search": [
+    { "field": "keyword", "label": "关键词", "widget": "Input", "props": {"placeholder": "用户名/邮箱"} }
+  ],
+  "table": {
+    "columns": [
+      { "field": "id", "label": "ID" },
+      { "field": "username", "label": "用户名" },
+      { "field": "email", "label": "邮箱", "mask": "email" },
+      { "field": "phone", "label": "手机号", "mask": "phone" }
+    ],
+    "rowActions": [
+      { "type": "edit", "label": "编辑", "perm": "sys:user:edit" },
+      { "type": "delete", "label": "删除", "perm": "sys:user:delete" }
+    ],
+    "import": true,
+    "export": true
+  },
+  "form": {
+    "fields": [
+      { "field": "username", "label": "用户名", "widget": "Input", "rules": [{"required": true, "message": "必填"}] },
+      { "field": "email", "label": "邮箱", "widget": "Input", "rules": [{"type": "email", "message": "邮箱格式不正确"}] },
+      { "field": "phone", "label": "手机号", "widget": "Input" }
+    ],
+    "submitPerm": "sys:user:add"
+  },
+  "rowFilter": "dept_id = ${user.deptId}",
+  "workflow": "leave",
+  "mock": true,
+  "cache": 300
+}
