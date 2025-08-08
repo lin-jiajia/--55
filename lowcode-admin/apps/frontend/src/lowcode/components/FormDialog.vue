@@ -3,7 +3,12 @@
     <el-form ref="formRef" :model="model" :rules="rules" label-width="100px">
       <template v-for="f in schema.fields" :key="f.field">
         <el-form-item v-if="can(f.perm)" :label="f.label" :prop="f.field">
-          <component :is="resolveWidget(f.widget)" v-model="model[f.field]" v-bind="resolveProps(f)" />
+          <template v-if="f.widget === 'Select'">
+            <el-select v-model="model[f.field]" v-bind="resolveProps(f)">
+              <el-option v-for="opt in (f.options || [])" :key="opt.value" :label="opt.label" :value="opt.value" />
+            </el-select>
+          </template>
+          <component v-else :is="resolveWidget(f.widget)" v-model="model[f.field]" v-bind="resolveProps(f)" />
         </el-form-item>
       </template>
     </el-form>
@@ -17,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import type { FormSchema } from '@/types/schema'
 import { useUserStore } from '@/stores/user'
 
@@ -47,7 +52,6 @@ watch(() => props.initial, (val) => {
 function resolveWidget(name: string) {
   switch (name) {
     case 'Input': return 'el-input'
-    case 'Select': return 'el-select'
     case 'DatePicker': return 'el-date-picker'
     case 'Switch': return 'el-switch'
     default: return name

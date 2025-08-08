@@ -2,7 +2,12 @@
   <el-form :inline="true" :model="model" @submit.prevent>
     <template v-for="item in items" :key="item.field">
       <el-form-item v-if="can(item.perm)" :label="item.label">
-        <component :is="resolveWidget(item.widget)" v-model="model[item.field]" v-bind="item.props" />
+        <template v-if="item.widget === 'Select'">
+          <el-select v-model="model[item.field]" v-bind="item.props">
+            <el-option v-for="opt in (item.options || [])" :key="opt.value" :label="opt.label" :value="opt.value" />
+          </el-select>
+        </template>
+        <component v-else :is="resolveWidget(item.widget)" v-model="model[item.field]" v-bind="item.props" />
       </el-form-item>
     </template>
     <el-form-item>
@@ -25,7 +30,6 @@ const user = useUserStore()
 function resolveWidget(name: string) {
   switch (name) {
     case 'Input': return 'el-input'
-    case 'Select': return 'el-select'
     case 'DatePicker': return 'el-date-picker'
     case 'Switch': return 'el-switch'
     default: return name
