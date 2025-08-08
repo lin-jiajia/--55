@@ -6,10 +6,19 @@ export interface ThemeSettings {
   logoUrl: string
 }
 
+export interface MenuItemSetting {
+  path: string
+  title: string
+}
+
 export interface SettingsState {
   theme: ThemeSettings
   tenantMode: boolean
   tenantId: string
+  logo: string
+  layout: 'side' | 'top' | 'mix'
+  menus: MenuItemSetting[]
+  mockEnabled: boolean
 }
 
 export const useSettingsStore = defineStore('settings', {
@@ -20,7 +29,15 @@ export const useSettingsStore = defineStore('settings', {
       logoUrl: ''
     },
     tenantMode: false,
-    tenantId: 'tenant_default'
+    tenantId: 'tenant_default',
+    logo: '',
+    layout: 'side',
+    menus: [
+      { path: '/lowcode/users', title: '用户管理' },
+      { path: '/form-designer', title: '表单设计器' },
+      { path: '/settings', title: '系统设置' }
+    ],
+    mockEnabled: true
   }),
-  persist: false
+  persist: true
 })

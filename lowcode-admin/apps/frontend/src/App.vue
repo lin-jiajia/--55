@@ -24,8 +24,7 @@
       <el-container>
         <el-aside width="200px" class="app-aside">
           <el-menu :router="true" :default-active="$route.path">
-            <el-menu-item index="/lowcode/users">用户管理</el-menu-item>
-            <el-menu-item index="/form-designer">表单设计器</el-menu-item>
+            <el-menu-item v-for="m in settings.menus" :key="m.path" :index="m.path">{{ m.title }}</el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
