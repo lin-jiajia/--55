@@ -1,0 +1,1 @@
+This folder can hold page-specific mock data if needed. Currently request.ts contains inline mocks.
